@@ -27,7 +27,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="lazy-import" href="my-view3.html">
 <link rel="lazy-import" href="my-view404.html">
 
-<dom-module id="my-app">
+<dom-module id="edeal-ng">
   <template>
     <style>
       :host {
@@ -93,11 +93,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <app-toolbar>
                 <paper-icon-button icon="menu"></paper-icon-button>
                 <div main-title></div>
-                <paper-icon-button icon="shopping-cart"></paper-icon-button>
+                <paper-icon-button icon="search"></paper-icon-button>
             </app-toolbar>
             <app-toolbar></app-toolbar>
             <app-toolbar>
-                <div spacer main-title>My App</div>
+                <div spacer main-title>Edeal NG</div>
             </app-toolbar>
         </app-header>
 
@@ -116,9 +116,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </template>
 
   <script>
-    class MyApp extends Polymer.Element {
+    class EdealNg extends Polymer.Element {
 
-      static get is() { return 'my-app'; }
+      static get is() { return 'edeal-ng'; }
 
       static get properties() {
         return {
@@ -179,6 +179,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     }
 
-    window.customElements.define(MyApp.is, MyApp);
+    window.customElements.define(EdealNg.is, EdealNg);
   </script>
 </dom-module>
