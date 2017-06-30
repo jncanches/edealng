@@ -1,6 +1,6 @@
 {
   "entrypoint": "index.html",
-  "shell": "src/edeal-ng.html",
+  "shell": "src/edeal-app.html",
   "fragments": [
     "src/my-view1.html",
     "src/my-view2.html",

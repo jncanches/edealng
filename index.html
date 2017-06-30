@@ -10,7 +10,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <!doctype html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta name="generator" content="Polymer Starter Kit">
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
@@ -54,41 +54,63 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <meta name="msapplication-tap-highlight" content="no">
 
     <script>
-      // Register the base URL
-      const baseUrl = document.querySelector('base').href;
+        // Register the base URL
+        const baseUrl = document.querySelector('base').href;
 
-      // Load and register pre-caching Service Worker
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function() {
-          navigator.serviceWorker.register(baseUrl + 'service-worker.js');
-        });
-      }
+        // Load and register pre-caching Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function () {
+                navigator.serviceWorker.register(baseUrl + 'service-worker.js');
+            });
+        }
     </script>
 
     <script src="src/libraries/jquery/jquery-3.2.1.min.js"></script>
 
-    <!-- Load webcomponents-loader.js to check and load any polyfills your browser needs -->
-    <script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+
+    <!-- Promise polyfill needed for 1.0-hybrid mode since neither iron-request 2.x nor
+      webcomponentsjs 0.x include the Promise polyfill. -->
+    <script src="bower_components/es6-promise/dist/es6-promise.auto.min.js"></script>
+
+    <link rel="import" href="bower_components/iron-ajax/iron-ajax.html">
+
 
     <!-- Load your application shell -->
-    <link rel="import" href="src/edeal-ng.html">
+    <link rel="import" href="src/edeal-app.html">
 
     <!-- Add any global styles for body, document, etc. -->
     <style>
-      body {
-        margin: 0;
-        font-family: 'Roboto', 'Noto', sans-serif;
-        line-height: 1.5;
-        min-height: 100vh;
-        background-color: #eeeeee;
-      }
+        body {
+            margin: 0;
+            font-family: sans-serif;
+            background-color: #f5f5f5;
+        }
     </style>
-  </head>
-  <body>
-    <edeal-ng></edeal-ng>
-    <noscript>
-      Please enable JavaScript to view this website.
-    </noscript>
-    <!-- Built with love using Polymer Starter Kit -->
-  </body>
+</head>
+<body unresolved>
+
+<dom-bind>
+    <template is="dom-bind">
+        <iron-ajax auto
+                   url="data/modules.json"
+                   params=''
+                   handle-as="json"
+                   last-response="{{modules}}">
+        </iron-ajax>
+        <iron-ajax auto
+                   url="data/dashboards.json"
+                   params=''
+                   handle-as="json"
+                   last-response="{{dashboards}}">
+        </iron-ajax>
+        <edeal-app dashboards="[[dashboards]]" modules="[[modules]]"></edeal-app>
+    </template>
+</dom-bind>
+
+<noscript>
+    Please enable JavaScript to view this website.
+</noscript>
+<!-- Built with love using Polymer Starter Kit -->
+</body>
 </html>

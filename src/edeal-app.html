@@ -1,0 +1,215 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../bower_components/app-route/app-location.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/iron-selector/iron-selector.html">
+
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+
+<link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
+
+<link rel="import" href="dashboard-detail.html">
+<link rel="import" href="dashboard-list.html">
+<link rel="import" href="app-icons.html">
+
+<link rel="import" href="sample-content.html">
+
+<dom-module id="edeal-app">
+
+    <template>
+
+        <custom-style>
+            <style is="custom-style">
+                html, body {
+                    height: 100%;
+                }
+
+                body {
+                    margin: 0;
+                    font-family: 'Roboto', 'Noto', sans-serif;
+                    background-color: #666;
+                }
+
+                app-header-layout {
+                    position: absolute;
+                    top: 0px;
+                    right: 0px;
+                    bottom: 0px;
+                    left: 0px;
+                    /*height: calc(100% - 200px);*/
+                    height: 100%;
+                    background-color: #eee;
+                    overflow: hidden;
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+                }
+
+                app-header {
+                    background-color: #4285f4;
+                    color: #fff;
+                }
+
+                paper-icon-button {
+                    --paper-icon-button-ink-color: white;
+                }
+            </style>
+        </custom-style>
+
+
+        <app-location route="{{_route}}" use-hash-as-path></app-location>
+        <app-route
+                route="{{_route}}"
+                pattern="/:page"
+                data="{{_pageData}}"
+                tail="{{_subRoute}}"></app-route>
+        <app-route
+                route="{{_subRoute}}"
+                pattern="/:id"
+                data="{{_idData}}"></app-route>
+
+
+        <!--<app-header class="header"-->
+                    <!--condenses-->
+                    <!--fixed-->
+                    <!--shadow-->
+                    <!--effects="blend-background parallax-background resize-title">-->
+            <!--<div class="header-toolbar layout horizontal center">-->
+                <!--<paper-icon-button class="drawer-toggle" icon="menu" tabindex="0"></paper-icon-button>-->
+                <!--<a href="/" class="logo-link">-->
+                    <!--<img src="https://www.polymer-project.org/images/logos/p-logo.png" alt="Polymer Logo">-->
+                    <!--<span>Polymer Project</span>-->
+                <!--</a>-->
+                <!--<div class="flex"></div>-->
+                <!--<nav>-->
+                    <!--<paper-icon-button icon="pw-icons:search" tabindex="-1" aria-label="Search Polymer site" role="button" aria-disabled="false"></paper-icon-button>-->
+                <!--</nav>-->
+            <!--</div>-->
+        <!--</app-header>-->
+
+        <!--<sample-content size="100"></sample-content>-->
+        <!-- app-header-layout provides a scroller -->
+        <app-header-layout has-scrolling-region>
+            <app-header slot="header" shadow fixed condenses on-click="toggleNavBar">
+                <app-toolbar>
+                    <paper-icon-button icon="menu"></paper-icon-button>
+                    <div main-title></div>
+                    <paper-icon-button icon="search"></paper-icon-button>
+                </app-toolbar>
+                <app-toolbar></app-toolbar>
+                <app-toolbar>
+                    <div spacer main-title>My Drive</div>
+                </app-toolbar>
+            </app-header>
+
+            <app-drawer id="navBar">
+                <div style="height: 100%; overflow: auto;"></div>
+            </app-drawer>
+
+            <sample-content size="100"></sample-content>
+
+        </app-header-layout>
+
+    </template>
+
+    <script>
+
+        Polymer({
+
+            is: 'edeal-app',
+
+            properties: {
+
+                dashboards: Object,
+
+                modules: Object,
+
+                _route: Object,
+
+                _subRoute: Object,
+
+                _pageData: {
+                    type: Object,
+                    observer: '_pageDataChanged'
+                },
+
+                _selectedPage: String,
+
+                _idData: Object,
+
+                _scrollPositionMap: {
+                    type: Object,
+                    value: function() {
+                        return {};
+                    }
+                }
+            },
+
+            toggleNavBar: function() {
+                this.$.navBar.toggle();
+            },
+
+            attached: function() {
+                this.async(function() {
+                    if (!this._route.path) {
+                        this.set('_route.path', '/home');
+                    }
+                });
+            },
+
+            _getRecipe: function() {
+                if (this.dashboards && this._idData && this._idData.id) {
+                    for (var i = 0; i < this.dashboards.length; ++i) {
+                        var r = this.dashboards[i];
+                        if (r.id === this._idData.id) {
+                            return r;
+                        }
+                    }
+                }
+                return null;
+            },
+
+            _drawerSelected: function() {
+                if (!this.$.drawer.persistent) this.$.drawer.close();
+            },
+
+            /**
+             * Preserves the document scroll position, so
+             * it can be restored when returning to a page.
+             */
+            _pageDataChanged: function(pageData, oldPageData) {
+                var map = this._scrollPositionMap;
+
+                if (oldPageData != null && oldPageData.page != null) {
+                    map[oldPageData.page] = window.pageYOffset;
+                }
+                this._selectedPage = pageData.page;
+                if (map[pageData.page] != null) {
+                    Polymer.AppLayout.scroll({ top: map[pageData.page], behavior: 'silent' });
+                } else if (this.isAttached) {
+                    Polymer.AppLayout.scroll({ top: 0, behavior: 'silent' });
+                }
+            }
+
+        });
+
+    </script>
+
+</dom-module>

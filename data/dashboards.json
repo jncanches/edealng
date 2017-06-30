@@ -1,0 +1,12 @@
+[
+  {
+    "id": "SALES_PIPE",
+    "label": "Sales pipe",
+    "description": "Your sale's pipe"
+  },
+  {
+    "id": "TODO",
+    "label": "To Do list",
+    "description": "Your coming work to do"
+  }
+]
