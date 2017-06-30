@@ -2,16 +2,47 @@
   {
     "id": "SALES",
     "label": "SALES",
-    "color": "#466ab5"
+    "color": "#466ab5",
+    "items": [
+      {
+        "id": "COMPANIES",
+        "label": "Companies"
+      },{
+        "id": "PERSONS",
+        "label": "Persons"
+      },{
+        "id": "OPPORTUNITIES",
+        "label": "Opportunities"
+      },{
+        "id": "INTERACTIONS",
+        "label": "Interactions"
+      }
+    ]
   },
   {
     "id": "SERVICES",
     "label": "SERVICES",
-    "color": "#e3ae00"
+    "color": "#e3ae00",
+    "items": [
+      {
+        "id": "EMAILING",
+        "label": "E-mailing"
+      },{
+        "id": "SILHOUETTE",
+        "label": "Silhouettes"
+      }]
   },
   {
     "id": "MARKETING",
     "label": "MARKETING",
-    "color": "#da4f4c"
+    "color": "#da4f4c",
+    "items": [
+      {
+        "id": "PRODUCTS",
+        "label": "Products"
+      },{
+        "id": "EVENTS",
+        "label": "Events"
+      }]
   }
 ]
