@@ -1,17 +1,17 @@
 [
   {
-    id: "SALES",
-    label: "SALES",
-    color: "#466ab5"
+    "id": "SALES",
+    "label": "SALES",
+    "color": "#466ab5"
   },
   {
-    id: "SERVICES",
-    label: "SERVICES",
-    color: "#e3ae00"
+    "id": "SERVICES",
+    "label": "SERVICES",
+    "color": "#e3ae00"
   },
   {
-    id: "MARKETING",
-    label: "MARKETING",
-    color: "#da4f4c"
+    "id": "MARKETING",
+    "label": "MARKETING",
+    "color": "#da4f4c"
   }
 ]
